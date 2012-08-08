@@ -2,7 +2,7 @@
 
 hitlist_uri="http://en.wikipedia.org/w/index.php?title=List_of_1960s_UK_Singles_Chart_number_ones&action=edit&section=1"
 
-wget -O- "$uri" \
+wget -qO- "$hitlist_uri" \
 | hxselect -c 'textarea[cols="80"]' \
 | awk -F '[]{}[]' -f trim -v OFS="" -e '
 /sort\|/ {

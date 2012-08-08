@@ -499,6 +499,7 @@ sub parse_arguments {
         'nostdin'          => \$opt{no_stdin},
         'noconfig|N!'      => \$noconfig,
         'playlists|p!'     => \$opt{playlists},
+        'batch|b!'         => \$opt{batch},
         'shuffle|s!'       => \$opt{shuffle},
         'debug!'           => \$opt{debug},
         'update-config|U!' => \$opt{update_config},
@@ -604,7 +605,7 @@ sub insert_url {
         }
     }
 }
-insert_url() unless length $keywords;
+insert_url() unless length $keywords or $opt{batch};
 
 #---------------------- GET A VIDEO CODE FROM AN WEBSITE CONTENT ----------------------#
 sub code_from_content {
@@ -1176,6 +1177,11 @@ sub play_or_download {
 }
 
 #---------------------- SEARCH YOUTUBE VIDEOS ----------------------#
+print "Hello\n";
+set_lwp_useragent();
+create_playlist("Some list", "Testing playlist creation");
+main_quit();
+
 if (length($keywords)) {
     search() unless $opt{video_id_from_arguments};
 }
@@ -1794,6 +1800,22 @@ ERROR
 sub show_related_videos {
     my ($code) = @_;
     parse_url("$CONFIG{feeds_main_url}/videos/$code/related");
+}
+
+sub create_playlist {
+    my ($playlist_title, $playlist_description) = @_;
+    my $uri = "$CONFIG{feeds_main_url}/users/default/playlists";
+
+    say _save(
+        'POST', $uri, <<"XML_HEADER"
+<?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.w3.org/2005/Atom"
+       xmlns:yt="http://gdata.youtube.com/schemas/2007">
+  <title type="text">$playlist_title</title>
+  <summary>$playlist_description</summary>
+</entry>
+XML_HEADER
+             ) ? "Created!" : 'Error!';
 }
 
 sub send_rating_to_video {
