@@ -86,6 +86,7 @@ use autouse 'XML::Fast'   => qw(xml2hash);
 use autouse 'URI::Escape' => qw(uri_escape);
 
 use File::Spec::Functions qw(catdir curdir path rel2abs tmpdir);
+use List::Util 'shuffle';
 
 #-------FOR DEBUG ONLY-------#
 # use diagnostics -v;
@@ -498,6 +499,7 @@ sub parse_arguments {
         'nostdin'          => \$opt{no_stdin},
         'noconfig|N!'      => \$noconfig,
         'playlists|p!'     => \$opt{playlists},
+        'shuffle|s!'       => \$opt{shuffle},
         'debug!'           => \$opt{debug},
         'update-config|U!' => \$opt{update_config},
         'download|d!'      => \$opt{download_video},
@@ -634,6 +636,7 @@ sub help {
    -c  --categories     : show available YouTube categories
    -p  --playlists      : search for playlists of videos
    -M  --movies         : show YouTube category of movies
+   -s  --shuffle        : shuffle playlist before playback
    -results=[1-50]      : how many videos to display per page
    -u=s  -user=s        : list videos uploaded by a specific user
    -up=s                : list playlists created by a specific user
@@ -1548,6 +1551,8 @@ sub print_results {
 }
 
 sub foreach_pick {
+    @picks = shuffle(@picks) if $opt{shuffle};
+
     while (@picks) {
         get_youtube($results[shift(@picks) - 1]);
     }
