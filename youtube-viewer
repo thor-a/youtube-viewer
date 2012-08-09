@@ -499,12 +499,12 @@ sub parse_arguments {
         'nostdin'          => \$opt{no_stdin},
         'noconfig|N!'      => \$noconfig,
         'playlists|p!'     => \$opt{playlists},
-        'batch|b!'         => \$opt{batch},
         'shuffle|s!'       => \$opt{shuffle},
         'debug!'           => \$opt{debug},
         'update-config|U!' => \$opt{update_config},
         'download|d!'      => \$opt{download_video},
         'print_video_id'   => \$opt{print_video_id},
+        'batch|b!'         => \$opt{batch},
         'safe-search=s'    => \$CONFIG{safe_search},
         'hd!'              => \$CONFIG{only_hd_videos},
         'cache-min=i'      => \$CONFIG{cache_min},
@@ -518,6 +518,8 @@ sub parse_arguments {
         'lwp-download|L!'  => \$CONFIG{lwp_downloading},
         'order-by=s'       => \$CONFIG{order_by},
         'time=s'           => \$CONFIG{time_sort},
+        'playlist_title'   => \$CONFIG{playlist_title},
+        'playlist_desc'    => \$CONFIG{playlist_desc},
 
         'page=i'           => sub { $opt{start_with_page} = pop },
         'append_mplayer=s' => sub { $MPLAYER{argv}        = pop },
@@ -1176,12 +1178,31 @@ sub play_or_download {
     return 1;
 }
 
-#---------------------- SEARCH YOUTUBE VIDEOS ----------------------#
-print "Hello\n";
-set_lwp_useragent();
-create_playlist("Some list", "Testing playlist creation");
-main_quit();
+#---------------------- BATCH MODE ----------------------#
+if($opt{batch}) {
+  set_lwp_useragent();
+  my @cmds = split /\s+/, $keywords;
+  given($keywords) {
+    when(/c(reate)?\s+p(laylist)?/i) {
+      if(length($CONFIG{playlist_title})) {
+        create_playlist($CONFIG{playlist_title}, $CONFIG{playlist_desc});
+      }
+    }
+    when(/s(earch)?/) {
+      shift @cmds;
+      $keywords = join " ", @cmds;
+      search();
+      foreach (@results) {
+        printf("%s - " . $CONFIG{youtube_video_url} . "\n", $_->{title}, $_->{code});
+      }
+      print "\n";
+    }
+  }
+  main_quit();
+}
 
+
+#---------------------- SEARCH YOUTUBE VIDEOS ----------------------#
 if (length($keywords)) {
     search() unless $opt{video_id_from_arguments};
 }
@@ -1266,6 +1287,7 @@ sub search {
         $youtube_gdata_url .= $CONFIG{query_parameters};
     }
     parse_content($youtube_gdata_url);
+    return if $opt{batch};
     print_results();
 }
 

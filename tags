@@ -1,0 +1,88 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Config	youtube-viewer	/^package Config;$/;"	p
+Tips	youtube-viewer	/^Tips:$/;"	l
+_dump	youtube-viewer	/^sub _dump {$/;"	s
+_prepare_request	youtube-viewer	/^sub _prepare_request {$/;"	s
+_request	youtube-viewer	/^sub _request {$/;"	s
+_save	youtube-viewer	/^sub _save {$/;"	s
+_sort_items	youtube-viewer	/^sub _sort_items {$/;"	s
+all	youtube-viewer	/^all               : play all the results in order$/;"	l
+apply_configuration	youtube-viewer	/^sub apply_configuration {$/;"	s
+array_to_gdata_arguments	youtube-viewer	/^sub array_to_gdata_arguments {$/;"	s
+authenticate	youtube-viewer	/^sub authenticate {$/;"	s
+back	youtube-viewer	/^back              : return to the previous page$/;"	l
+categories_area	youtube-viewer	/^sub categories_area {$/;"	s
+check_user_input	youtube-viewer	/^sub check_user_input {$/;"	s
+code_from_content	youtube-viewer	/^sub code_from_content {$/;"	s
+create_playlist	youtube-viewer	/^sub create_playlist {$/;"	s
+default_gdata_arguments	youtube-viewer	/^sub default_gdata_arguments {$/;"	s
+favorite_video	youtube-viewer	/^sub favorite_video {$/;"	s
+foreach_pick	youtube-viewer	/^sub foreach_pick {$/;"	s
+format_date	youtube-viewer	/^sub format_date {$/;"	s
+format_itags	youtube-viewer	/^sub format_itags {$/;"	s
+format_time	youtube-viewer	/^sub format_time {$/;"	s
+get_arguments_from_string	youtube-viewer	/^sub get_arguments_from_string {$/;"	s
+get_closed_caption	youtube-viewer	/^sub get_closed_caption {$/;"	s
+get_defined_pairs_from_array	youtube-viewer	/^sub get_defined_pairs_from_array {$/;"	s
+get_favorited_videos	youtube-viewer	/^sub get_favorited_videos {$/;"	s
+get_keywords_from_array	youtube-viewer	/^sub get_keywords_from_array {$/;"	s
+get_keywords_from_string	youtube-viewer	/^sub get_keywords_from_string {$/;"	s
+get_mplayer	youtube-viewer	/^sub get_mplayer {$/;"	s
+get_new_subsc	youtube-viewer	/^sub get_new_subsc {$/;"	s
+get_recommended_videos	youtube-viewer	/^sub get_recommended_videos {$/;"	s
+get_start_index	youtube-viewer	/^sub get_start_index {$/;"	s
+get_watch_history	youtube-viewer	/^sub get_watch_history {$/;"	s
+get_youtube	youtube-viewer	/^sub get_youtube {$/;"	s
+help	youtube-viewer	/^sub help {$/;"	s
+insert_url	youtube-viewer	/^sub insert_url {$/;"	s
+is_code	youtube-viewer	/^sub is_code {$/;"	s
+list_playlist	youtube-viewer	/^sub list_playlist {$/;"	s
+list_user_names	youtube-viewer	/^sub list_user_names {$/;"	s
+locate_wget	youtube-viewer	/^sub locate_wget {$/;"	s
+log_out	youtube-viewer	/^sub log_out {$/;"	s
+login	youtube-viewer	/^login             : will prompt you for login$/;"	l
+logout	youtube-viewer	/^logout            : will delete the authentication key$/;"	l
+lower_quality	youtube-viewer	/^sub lower_quality {$/;"	s
+lwp_get	youtube-viewer	/^sub lwp_get {$/;"	s
+main_quit	youtube-viewer	/^sub main_quit {$/;"	s
+next	youtube-viewer	/^next              : go to the next page (same as <ENTER>)$/;"	l
+next_page	youtube-viewer	/^sub next_page {$/;"	s
+parse_arguments	youtube-viewer	/^sub parse_arguments {$/;"	s
+parse_content	youtube-viewer	/^sub parse_content {$/;"	s
+parse_url	youtube-viewer	/^sub parse_url {$/;"	s
+play_or_download	youtube-viewer	/^sub play_or_download {$/;"	s
+playlists_from_username	youtube-viewer	/^sub playlists_from_username {$/;"	s
+playlists_waiting_input	youtube-viewer	/^sub playlists_waiting_input {$/;"	s
+previous_page	youtube-viewer	/^sub previous_page {$/;"	s
+print_playlists	youtube-viewer	/^sub print_playlists {$/;"	s
+print_results	youtube-viewer	/^sub print_results {$/;"	s
+quit_required	youtube-viewer	/^sub quit_required {$/;"	s
+require_getopt_long	youtube-viewer	/^sub require_getopt_long {$/;"	s
+save_hash	youtube-viewer	/^sub save_hash {$/;"	s
+search	youtube-viewer	/^sub search {$/;"	s
+search_playlists	youtube-viewer	/^sub search_playlists {$/;"	s
+select_resolution	youtube-viewer	/^sub select_resolution {$/;"	s
+send_comment_to_video	youtube-viewer	/^sub send_comment_to_video {$/;"	s
+send_rating_to_video	youtube-viewer	/^sub send_rating_to_video {$/;"	s
+set_auth_key	youtube-viewer	/^sub set_auth_key {$/;"	s
+set_lwp_useragent	youtube-viewer	/^sub set_lwp_useragent {$/;"	s
+set_mplayer_arguments	youtube-viewer	/^sub set_mplayer_arguments {$/;"	s
+set_thousands	youtube-viewer	/^sub set_thousands {$/;"	s
+show_comments	youtube-viewer	/^sub show_comments {$/;"	s
+show_related_videos	youtube-viewer	/^sub show_related_videos {$/;"	s
+subscribe_channel	youtube-viewer	/^sub subscribe_channel {$/;"	s
+tricks	youtube-viewer	/^sub tricks {$/;"	s
+update_mplayer_arguments	youtube-viewer	/^sub update_mplayer_arguments {$/;"	s
+version	youtube-viewer	/^sub version {$/;"	s
+videos_from_username	youtube-viewer	/^sub videos_from_username {$/;"	s
+write_config_to_file	youtube-viewer	/^sub write_config_to_file {$/;"	s
+xmlns	youtube-viewer	/^       xmlns:yt="http:\/\/gdata.youtube.com\/schemas\/2007">$/;"	l
+xmlns	youtube-viewer	/^    xmlns:yt="http:\/\/gdata.youtube.com\/schemas\/2007">$/;"	l
+xmlns	youtube-viewer	/^  xmlns:yt="http:\/\/gdata.youtube.com\/schemas\/2007">$/;"	l
+youtube_movies	youtube-viewer	/^sub youtube_movies {$/;"	s
+youtube_tops	youtube-viewer	/^sub youtube_tops {$/;"	s
