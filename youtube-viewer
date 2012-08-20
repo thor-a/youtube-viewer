@@ -518,8 +518,11 @@ sub parse_arguments {
         'lwp-download|L!'  => \$CONFIG{lwp_downloading},
         'order-by=s'       => \$CONFIG{order_by},
         'time=s'           => \$CONFIG{time_sort},
+        'playlist_id'      => \$CONFIG{playlist_id},
         'playlist_title'   => \$CONFIG{playlist_title},
         'playlist_desc'    => \$CONFIG{playlist_desc},
+        'video_id'         => \$CONFIG{video_id},
+        'defuser'          => \$CONFIG{defuser},
 
         'page=i'           => sub { $opt{start_with_page} = pop },
         'append_mplayer=s' => sub { $MPLAYER{argv}        = pop },
@@ -950,6 +953,8 @@ sub search_playlists {
     $opt{playlists} = 1;
     parse_content($youtube_gdata_url);
 
+    return if $opt{batch};
+
     my $i = 0;
     foreach my $playlist (@results) {
         print_playlists($playlist, ++$i);
@@ -1180,25 +1185,52 @@ sub play_or_download {
 
 #---------------------- BATCH MODE ----------------------#
 if($opt{batch}) {
-  set_lwp_useragent();
-  my @cmds = split /\s+/, $keywords;
-  given($keywords) {
-    when(/c(reate)?\s+p(laylist)?/i) {
-      if(length($CONFIG{playlist_title})) {
-        create_playlist($CONFIG{playlist_title}, $CONFIG{playlist_desc});
-      }
+    set_lwp_useragent();
+    my @cmds = split /\s+/, $keywords;
+
+    given($keywords) {
+        when(/c(reate)?\s+p(laylist)?/i) {
+            if(length($CONFIG{playlist_title})) {
+                create_playlist($CONFIG{playlist_title}, $CONFIG{playlist_desc});
+            } else {
+                say STDERR "You need to specify the title of the playlist (--playlist_title).";
+            }
+        }
+        when(/a(dd)?\s+v(ideo)?/i) {
+            if(length($CONFIG{playlist_id}) and length($CONFIG{video_id}) ) {
+                add_video_to_playlist($CONFIG{playlist_id}, $CONFIG{video_id});
+            } else {
+                say STDERR "You need to specify the playlist id (--playlist_id) and video id (--video_id).";
+            }
+        }
+        when(/d(elete)?\s+p(laylist)?/i) {
+            if(length($CONFIG{playlist_id})) {
+                delete_playlist($CONFIG{playlist_id});
+            } else {
+                say STDERR "You need to specify the playlist id (--playlist_id).";
+            }
+        }
+        when(/search/) {
+            shift @cmds;
+            $keywords = join " ", @cmds;
+            search();
+            foreach (@results) {
+                say $_->{code} . " : " . $_->{title};
+            }
+            print "\n";
+        }
+        when(/l(ist)?\s+p(laylists)?/i) {
+            if(length($CONFIG{defuser})) {
+                playlists_from_username($CONFIG{defuser});
+                foreach (@results) {
+                    say $_->{playlistID} . " : " . $_->{title} . " : " . $_->{count};
+                }
+            } else {
+                say STDERR "You need to specify the playlist id (--playlist_id).";
+            }
+        }
     }
-    when(/s(earch)?/) {
-      shift @cmds;
-      $keywords = join " ", @cmds;
-      search();
-      foreach (@results) {
-        printf("%s - " . $CONFIG{youtube_video_url} . "\n", $_->{title}, $_->{code});
-      }
-      print "\n";
-    }
-  }
-  main_quit();
+    main_quit();
 }
 
 
@@ -1828,7 +1860,7 @@ sub create_playlist {
     my ($playlist_title, $playlist_description) = @_;
     my $uri = "$CONFIG{feeds_main_url}/users/default/playlists";
 
-    say _save(
+    _save(
         'POST', $uri, <<"XML_HEADER"
 <?xml version="1.0" encoding="UTF-8"?>
 <entry xmlns="http://www.w3.org/2005/Atom"
@@ -1837,7 +1869,30 @@ sub create_playlist {
   <summary>$playlist_description</summary>
 </entry>
 XML_HEADER
-             ) ? "Created!" : 'Error!';
+         );
+}
+
+sub delete_playlist {
+    my ($playlist_id) = @_;
+    my $uri = "$CONFIG{feeds_main_url}/users/default/playlists/$playlist_id";
+
+    _save('DELETE', $uri);
+}
+
+sub add_video_to_playlist {
+    my ($playlist_id, $video_id) = @_;
+    my $uri = "$CONFIG{feeds_main_url}/playlists/$playlist_id";
+
+    _save(
+        'POST', $uri, <<"XML_HEADER"
+<?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.w3.org/2005/Atom"
+       xmlns:yt="http://gdata.youtube.com/schemas/2007">
+    <id>$video_id</id>
+    <yt:position>1</yt:position>
+</entry>
+XML_HEADER
+         );
 }
 
 sub send_rating_to_video {

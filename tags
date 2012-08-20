@@ -21,6 +21,7 @@ check_user_input	youtube-viewer	/^sub check_user_input {$/;"	s
 code_from_content	youtube-viewer	/^sub code_from_content {$/;"	s
 create_playlist	youtube-viewer	/^sub create_playlist {$/;"	s
 default_gdata_arguments	youtube-viewer	/^sub default_gdata_arguments {$/;"	s
+delete_playlist	youtube-viewer	/^sub delete_playlist {$/;"	s
 favorite_video	youtube-viewer	/^sub favorite_video {$/;"	s
 foreach_pick	youtube-viewer	/^sub foreach_pick {$/;"	s
 format_date	youtube-viewer	/^sub format_date {$/;"	s
